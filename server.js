@@ -10,6 +10,8 @@ dotenv.config({ path: "./config/config.env" });
 const hospitals = require("./routes/hospitals");
 // Route for User register
 const auth = require("./routes/auth");
+// Route for appointments
+const appointments = require("./routes/appointments");
 
 // Connect to database
 connectDB();
@@ -25,6 +27,8 @@ app.use(cookieParser());
 app.use("/api/v1/hospitals", hospitals);
 
 app.use("/api/v1/auth", auth);
+
+app.use("/api/v1/appointments", appointments);
 
 const PORT = process.env.PORT || 5000;
 
