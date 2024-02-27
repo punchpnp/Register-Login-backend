@@ -8,16 +8,16 @@ exports.getAppointments = async (req, res, next) => {
 
   // General users can see only their appointments!
   if (req.user.role !== "admin") {
-    query = Appointment.find({ user: req.user.id });
+    query = Appointment.find({ user: req.user.id }).populate({
+      path: "hospital",
+      select: "name province tel",
+    });
   } else {
     // if you are an admin, you can see all!
-    // if (req.params.hospitalId) {
-    //   console.log(req.params.hospitalId);
-
-    //   query = Appointment.find({ hospital: req.params.hospitalId });
-    // } else {
-    query = Appointment.find();
-    // }
+    query = Appointment.find().populate({
+      path: "hospital",
+      select: "name province tel",
+    });
   }
   try {
     const appointments = await query;
