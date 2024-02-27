@@ -26,7 +26,7 @@ exports.getHospitals = async (req, res, next) => {
   );
 
   // finding resource
-  query = Hospital.find(JSON.parse(queryStr));
+  query = Hospital.find(JSON.parse(queryStr)).populate("appointments");
 
   // Select Field
   if (req.query.select) {
