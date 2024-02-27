@@ -75,12 +75,10 @@ exports.addAppointment = async (req, res, next) => {
     const hospital = await Hospital.findById(req.params.hospitalId);
 
     if (!hospital) {
-      return res
-        .status(404)
-        .json({
-          success: false,
-          message: `No hospital with the id of ${req.params.hospitalId}`,
-        });
+      return res.status(404).json({
+        success: false,
+        message: `No hospital with the id of ${req.params.hospitalId}`,
+      });
     }
 
     const appointment = await Appointment.create(req.body);
@@ -94,5 +92,64 @@ exports.addAppointment = async (req, res, next) => {
     return res
       .status(500)
       .json({ success: false, message: "Cannot create Appointment" });
+  }
+};
+
+//@desc  Update appointments
+//@route PUT /api/v1/appointments/:id
+//@access Private
+exports.updateAppointment = async (req, res, next) => {
+  try {
+    let appointment = await Appointment.findById(req.params.id);
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: `No appointment with the id of ${req.params.id}`,
+      });
+    }
+
+    appointment = await Appointment.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    res.status(200).json({
+      success: true,
+      data: appointment,
+    });
+  } catch (err) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Cannot update Appointment" });
+  }
+};
+
+//@desc  Delete appointments
+//@route Delete /api/v1/appointments/:id
+//@access Private
+exports.deleteAppointment = async (req, res, next) => {
+  try {
+    const appointment = await Appointment.findById(req.params.id);
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: `No appointment with the id of ${req.params.id}`,
+      });
+    }
+
+    await appointment.deleteOne();
+
+    res.status(200).json({
+      success: true,
+      data: {},
+    });
+  } catch (err) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Cannot delete Appointment" });
   }
 };
