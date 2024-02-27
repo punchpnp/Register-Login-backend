@@ -4,10 +4,17 @@ const Hospital = require("../models/Hospital");
 //@route GET /api/v1/hospitals
 //@access Public
 exports.getHospitals = async (req, res, next) => {
-  try {
-    const hospitals = await Hospital.find(req.query);
-    console.log(req.query);
+  let query;
+  let queryStr = JSON.stringify(req.query);
+  queryStr = queryStr.replace(
+    /\b(gt|gte|lt|lte|in)\b/g,
+    (match) => `$${match}`
+  );
 
+  query = Hospital.find(JSON.parse(queryStr));
+
+  try {
+    const hospitals = await query;
     res
       .status(200)
       .json({ success: true, count: hospitals.length, data: hospitals });
