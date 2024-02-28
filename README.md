@@ -1,6 +1,7 @@
 <p align="center">
-  <img src="https://blog.soton.ac.uk/beseated/files/2015/04/user2_sequence.png" alt="Alt Text" height="400">
+  <img src="https://images.ctfassets.net/cdy7uua7fh8z/2SkfIOm4fFOJ8N0GNJwam8/6615558d16d5827b985434f497b42b8d/Login_Flow__1_.png" alt="Alt Text" height="300">
 </p>
+
 
 # Register-Login Backend
 
